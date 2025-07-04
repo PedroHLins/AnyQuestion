@@ -2,6 +2,7 @@ package com.github.anyquestion.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,7 +10,7 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String title;
@@ -21,6 +22,6 @@ public class Question {
     @JoinColumn(name = "user", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Answer> answers = new ArrayList<>();
 }
