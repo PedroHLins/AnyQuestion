@@ -19,7 +19,7 @@ function InputLabel(props){
 }
 
 function App() {
-  const [formData, setFormData] = useState({email: "", password: ""})
+  const [formData, setFormData] = useState({name: "", email: "", password: ""})
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,11 +29,33 @@ function App() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("New user data: ", formData);
-  };
 
+    try{
+      const response = await fetch("http://localhost:8080/api/user/register",{
+        method: "POST",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if(!response.ok){
+        const errorMsg = await response.json();
+        alert("Error " + errorMsg.error);
+        return;
+      }
+
+      const successMsg = await response.text();
+      alert(successMsg);
+
+    } catch(error){
+      console.log("Conection error: " + error)
+    }
+  }
+    
   return (
     <div className="card">
       <h2>Sign Up</h2>
