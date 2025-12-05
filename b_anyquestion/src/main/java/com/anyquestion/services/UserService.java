@@ -20,7 +20,6 @@ public class UserService {
         }
 
         String passwordHash = passwordEncoder.encode(user.password());
-
         User newUser = new User();
 
         newUser.setName(user.name());
